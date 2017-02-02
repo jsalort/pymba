@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function, unicode_literals, division
+
 import vimbastructure as structs
 from vimbaexception import VimbaException
 from vimbadll import VimbaDLL

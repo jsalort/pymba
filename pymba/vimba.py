@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import print_function, unicode_literals, division
+
 import vimbastructure as structs
 from vimbadll import VimbaDLL
 from vimbaexception import VimbaException
@@ -73,7 +76,7 @@ class Vimba(object):
                                                 byref(numFound),
                                                 sizeof(dummyInterfaceInfo))
             if errorCode != 0:
-                print errorCode
+                print(errorCode)
                 raise VimbaException(errorCode)
 
             numInterfaces = numFound.value
