@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 
-import vimbastructure as structs
-from vimbaexception import VimbaException
-from vimbadll import VimbaDLL
-from vimbadll import VimbaC_MemoryBlock
+from . import vimbastructure as structs
+from .vimbaexception import VimbaException
+from .vimbadll import VimbaDLL
+from .vimbadll import VimbaC_MemoryBlock
 from ctypes import *
 import warnings
 try:

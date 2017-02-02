@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals, division
 
-import .vimbastructure as structs
+from . import vimbastructure as structs
 from .vimbaobject import VimbaObject
 from .vimbaexception import VimbaException
 from .vimbaframe import VimbaFrame
