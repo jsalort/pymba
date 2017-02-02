@@ -2,12 +2,12 @@
 
 from __future__ import print_function, unicode_literals, division
 
-import vimbastructure as structs
-from vimbadll import VimbaDLL
-from vimbaexception import VimbaException
-from vimbasystem import VimbaSystem
-from vimbacamera import VimbaCamera
-from vimbainterface import VimbaInterface
+import .vimbastructure as structs
+from .vimbadll import VimbaDLL
+from .vimbaexception import VimbaException
+from .vimbasystem import VimbaSystem
+from .vimbacamera import VimbaCamera
+from .vimbainterface import VimbaInterface
 from ctypes import *
 
 

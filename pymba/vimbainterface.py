@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 
-import vimbastructure as structs
-from vimbaobject import VimbaObject
-from vimbaexception import VimbaException
-from vimbadll import VimbaDLL
+import .vimbastructure as structs
+from .vimbaobject import VimbaObject
+from .vimbaexception import VimbaException
+from .vimbadll import VimbaDLL
 from ctypes import *
 
 # interface features are automatically readable as object attributes.

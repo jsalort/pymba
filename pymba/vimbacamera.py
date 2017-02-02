@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals, division
 
-import vimbastructure as structs
-from vimbaobject import VimbaObject
-from vimbaexception import VimbaException
-from vimbaframe import VimbaFrame
-from vimbadll import VimbaDLL
+import .vimbastructure as structs
+from .vimbaobject import VimbaObject
+from .vimbaexception import VimbaException
+from .vimbaframe import VimbaFrame
+from .vimbadll import VimbaDLL
 from ctypes import *
 
 # camera features are automatically readable as object attributes.

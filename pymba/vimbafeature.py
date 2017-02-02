@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals, division
 
-import vimbastructure as structs
-from vimbaexception import VimbaException
-from vimbadll import VimbaDLL
+import .vimbastructure as structs
+from .vimbaexception import VimbaException
+from .vimbadll import VimbaDLL
 from ctypes import *
 
 # class may extend a generic Vimba entity class one day...

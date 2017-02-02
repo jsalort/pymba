@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 
-from vimbaobject import VimbaObject
+from .vimbaobject import VimbaObject
 from ctypes import *
 
 # system features are automatically readable as attributes.
