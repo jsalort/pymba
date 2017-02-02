@@ -2,7 +2,7 @@
 
 from __future__ import print_function, unicode_literals, division
 
-import .vimbastructure as structs
+from . import vimbastructure as structs
 from .vimbadll import VimbaDLL
 from .vimbaexception import VimbaException
 from .vimbasystem import VimbaSystem
