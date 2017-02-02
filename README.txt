@@ -24,7 +24,7 @@ If Vimba SDK and pymba are installed correctly, then the following code should g
 	from pymba import *
 	
 	with Vimba() as vimba:
-	    print vimba.getVersion()
+	    print(vimba.getVersion())
 	
 Interacting with cameras
 ------------------------
@@ -45,7 +45,7 @@ Discover, open, manipulate, and capture frames from a camera.
             time.sleep(0.2)
         cameraIds = vimba.getCameraIds()
         for cameraId in cameraIds:
-            print 'Camera ID:', cameraId
+            print('Camera ID:', cameraId)
         
         # get and open a camera
         camera0 = vimba.getCamera(cameraIds[0])
@@ -54,10 +54,10 @@ Discover, open, manipulate, and capture frames from a camera.
         # list camera features
         cameraFeatureNames = camera0.getFeatureNames()
         for name in cameraFeatureNames:
-            print 'Camera feature:', name
+            print('Camera feature:', name)
         
         # get the value of a feature
-        print camera0.AcquisitionMode
+        print(camera0.AcquisitionMode)
         
         # set the value of a feature
         camera0.AcquisitionMode = 'SingleFrame'
@@ -106,7 +106,7 @@ Get a reference to the Vimba system object and list available system features.
         
         # list system features
         for featureName in system.getFeatureNames():
-            print 'System feature:', featureName
+            print('System feature:', featureName)
         
 
 Interacting with transport layer interfaces
@@ -120,7 +120,7 @@ Get a reference to an interface object and list available interface features.
         # get list of available interfaces
         interfaceIds = vimba.getInterfaceIds()
         for interfaceId in interfaceIds:
-            print 'Interface ID:', interfaceId
+            print('Interface ID:', interfaceId)
         
         # get interface object and open it
         interface0 = vimba.getInterface(interfaceIds[0])
@@ -129,7 +129,7 @@ Get a reference to an interface object and list available interface features.
         # list interface features
         interfaceFeatureNames = interface0.getFeatureNames()
         for name in interfaceFeatureNames:
-            print 'Interface feature:', name
+            print('Interface feature:', name)
         
         # close interface
         interface0.closeInterface()
@@ -142,7 +142,7 @@ Handling Vimba exceptions
 	try:
 	    with Vimba() as vimba:
 	except VimbaException as e:
-	    print e.message
+	    print(e.message)
 
 Known issues
 ============
