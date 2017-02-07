@@ -6,7 +6,7 @@ from .vimbaexception import VimbaException
 from .vimbafeature import VimbaFeature
 from .vimbadll import VimbaDLL
 from ctypes import *
-
+import six
 
 class VimbaObject(object):
 
@@ -33,6 +33,12 @@ class VimbaObject(object):
     # override getattr for undefined attributes
     def __getattr__(self, attr):
 
+        if six.PY3 and isinstance(attr, str):
+            # feature names are in the C struct as bytes, not str
+            # but cam.PayloadSize yields attr = 'PayloadSize'
+            # (as str) in Py3
+            attr = attr.encode('ascii')
+            
         # if a feature value requested (requires object (camera) open)
         if attr in self.getFeatureNames():
             return VimbaFeature(attr, self._handle).value
@@ -146,6 +152,10 @@ class VimbaObject(object):
 
         :param featureName: the name of the feature.
         """
+        # In Py3, make sure featureName is bytes not str
+        if six.PY3 and isinstance(featureName, str):
+            featureName = featureName.encode('ascii')
+            
         # run a command
         errorCode = VimbaDLL.featureCommandRun(self._handle,
                                                featureName)

@@ -5,6 +5,7 @@ from . import vimbastructure as structs
 from .vimbaexception import VimbaException
 from .vimbadll import VimbaDLL
 from ctypes import *
+import six
 
 # class may extend a generic Vimba entity class one day...
 
@@ -30,6 +31,8 @@ class VimbaFeature(object):
 
     @value.setter
     def value(self, val):
+        if six.PY3 and isinstance(val, str):
+            val = val.encode('ascii')
         self._getSetTypeFuncs[self._info.featureDataType][1](val)
 
     @property
@@ -39,6 +42,8 @@ class VimbaFeature(object):
     def __init__(self, name, handle):
 
         # set name and handle
+        if six.PY3 and isinstance(name, str):
+            name = name.encode('ascii')
         self._name = name
         self._handle = handle
 
