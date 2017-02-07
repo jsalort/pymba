@@ -168,8 +168,21 @@ class VimbaFrame(object):
     def getImage(self):
         cframe = self._frame
         data = cast(cframe.buffer, POINTER(c_ubyte * cframe.imageSize))
+        if self.pixel_bytes == 1:
+            dt = np.uint8
+        elif self._camera.PixelFormat.startswith(b'Mono') and self.pixel_bytes > 1:
+            dt = np.uint16
+        else:
+            raise NotImplemented('Check dtype here')
         try:
-            return np.ndarray(buffer=data.contents, dtype=np.uint8, shape=(cframe.height, cframe.width))
+            return np.ndarray(buffer=data.contents, dtype=dt, shape=(cframe.height, cframe.width))
         except NameError as e:
             print('install numpy to use this method or use getBufferByteData instead')
             raise e
+
+    @property
+    def timestamp(self):
+        """
+        Timestamp in units 100 ns
+        """
+        return self._frame.timestamp

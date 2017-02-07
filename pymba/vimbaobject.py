@@ -50,7 +50,10 @@ class VimbaObject(object):
 
     # override setattr for undefined attributes
     def __setattr__(self, attr, val):
-
+        # In Py3, attr is str but self.getFeatureNames()
+        # returns list of bytes.
+        attrb = attr.encode('ascii')
+        
         # set privates as normal
         # check this first to allow all privates to set normally
         # and avoid recursion errors
@@ -58,8 +61,8 @@ class VimbaObject(object):
             super(VimbaObject, self).__setattr__(attr, val)
 
         # if it's an actual camera feature (requires camera open)
-        elif attr in self.getFeatureNames():
-            VimbaFeature(attr, self._handle).value = val
+        elif attrb in self.getFeatureNames():
+            VimbaFeature(attrb, self._handle).value = val
 
         # otherwise just set the attribute value as normal
         else:
@@ -124,6 +127,9 @@ class VimbaObject(object):
 
         :returns: VimbaFeatureInfo object -- the feature info object specified.
         """
+        if six.PY3 and isinstance(featureName, str):
+            featureName = featureName.encode('ascii')
+            
         # don't do this live as we already have this info
         # return info object, if it exists
         for featInfo in self._getFeatureInfos():

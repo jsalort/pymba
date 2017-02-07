@@ -193,7 +193,7 @@ class VimbaFeature(object):
 
         :param valueToSet: the enum value to set for the feature.
         """
-
+        #print('_setEnumFeature (name={:}, valueToSet={:}'.format(repr(self._name), repr(valueToSet)))
         errorCode = VimbaDLL.featureEnumSet(self._handle,
                                             self._name,
                                             valueToSet)
@@ -209,7 +209,7 @@ class VimbaFeature(object):
 
         # create args
         bufferSize = 256
-        valueToGet = create_string_buffer('\000' * bufferSize)
+        valueToGet = create_string_buffer(b'\000' * bufferSize)
         sizeFilled = c_uint32()
 
         errorCode = VimbaDLL.featureStringGet(self._handle,
@@ -229,6 +229,9 @@ class VimbaFeature(object):
         :param valueToSet: the string value to set for the feature.
         """
 
+        if six.PY3 and isinstance(valueToSet, str):
+            valueToSet = valueToSet.encode('ascii')
+            
         errorCode = VimbaDLL.featureStringSet(self._handle,
                                               self._name,
                                               valueToSet)
