@@ -67,7 +67,7 @@ class VimbaFeature(object):
         self._rangeQueryTypeFuncs = {0: self._unknownRange,
                                      1: self._rangeQueryIntFeature,
                                      2: self._rangeQueryFloatFeature,
-                                     3: self._unknownRange,
+                                     3: self._rangeQueryEnumFeature,
                                      4: self._unknownRange,
                                      5: self._unknownRange,
                                      6: self._unknownRange,
@@ -315,22 +315,36 @@ class VimbaFeature(object):
 
         return (minToGet.value, maxToGet.value)
 
-    # def _rangeQueryEnumFeature(self):
-    #	"""
-    #	Get the range of an enum feature.
-    #
-    #	:returns: tuple -- min and max range.
-    #	"""
-    #
-    # create args
-    #	minToGet = c_uint32()
-    #	maxToGet = c_uint32()
-    #
-    #	errorCode = VimbaDLL.featureEnumRangeQuery(self._handle,
-    #											   self._name,
-    #											   byref(minToGet),
-    #											   byref(maxToGet))
-    #	if errorCode != 0:
-    #		raise VimbaException(errorCode)
-    #
-    #	return (minToGet.value, maxToGet.value)
+    def _rangeQueryEnumFeature(self):
+        """
+        Get the list of an enum feature possible values
+        
+        :returns: tuple
+        """
+        
+        # first query the number of possible values
+        numFilled = c_uint32()
+        null = c_void_p()
+        errorCode = VimbaDLL.featureEnumRangeQuery(self._handle,
+                                                   self._name,
+                                                   cast(null, POINTER(c_char_p)),
+                                                   0,
+                                                   byref(numFilled))
+        if errorCode != 0:
+            raise VimbaException(errorCode)
+        
+        print('numFilled =', numFilled.value)
+        
+        # query list
+        enum_values_type = c_char_p*(numFilled.value)
+        enum_values = enum_values_type()
+        errorCode = VimbaDLL.featureEnumRangeQuery(self._handle,
+                                                   self._name,
+                                                   enum_values,
+                                                   numFilled,
+                                                   cast(null, POINTER(c_uint32)))
+        if errorCode != 0:
+            raise VimbaException(errorCode)
+
+        return tuple(ev.decode('ascii') for ev in enum_values)
+        

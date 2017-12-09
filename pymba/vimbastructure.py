@@ -66,7 +66,22 @@ class VimbaFeatureInfo(Structure):
         """
         return [field[0] for field in self._fields_]
 
-
+class VimbaFeatureEnumEntry(Structure):
+    
+    _fields_ = [('name', c_char_p),
+                ('displayName', c_char_p),
+                ('visibility', c_uint32),
+                ('tooltip', c_char_p),
+                ('description', c_char_p),
+                ('sfncNamespace', c_char_p),
+                ('intValue', c_int64)]
+                
+    def getFieldNames(self):
+        """
+        Get field names.
+        """
+        return [field[0] for field in self._fields_]
+    
 class VimbaFrame(Structure):
 
                                 # IN

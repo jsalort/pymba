@@ -92,11 +92,11 @@ class VimbaDLL(object):
     #
     # -- VmbFeatureEnumGet()
     # -- VmbFeatureEnumSet()
-    # VmbFeatureEnumRangeQuery()
+    # -- VmbFeatureEnumRangeQuery()
     # VmbFeatureEnumIsAvailable()
     # VmbFeatureEnumAsInt()
-    # VmbFeatureEnumAsString()
-    # VmbFeatureEnumEntryGet()
+    # -- VmbFeatureEnumAsString()
+    # -- VmbFeatureEnumEntryGet()
     #
     # -- VmbFeatureStringGet()
     # -- VmbFeatureStringSet()
@@ -279,7 +279,33 @@ class VimbaDLL(object):
                                # name of the feature
                                c_char_p,
                                c_char_p)                            # value to set
-
+    
+    # query the value range of an enumeration feature
+    featureEnumRangeQuery = _vimbaDLL.VmbFeatureEnumRangeQuery
+    featureEnumRangeQuery.restype = c_int32
+    featureEnumRangeQuery.argtypes = (c_void_p,
+                                      c_char_p,
+                                      POINTER(c_char_p),
+                                      c_uint32,
+                                      POINTER(c_uint32))
+    
+    # get the enumeration string value for a given integer value
+    featureEnumAsString = _vimbaDLL.VmbFeatureEnumAsString
+    featureEnumAsString.restype = c_int32
+    featureEnumAsString.argtypes = (c_void_p,
+                                    c_char_p,
+                                    c_int64,
+                                    POINTER(c_char_p))
+    
+    # get infos about an entry of an enumeration feature
+    featureEnumEntryGet = _vimbaDLL.VmbFeatureEnumEntryGet
+    featureEnumEntryGet.restype = c_int32
+    featureEnumEntryGet.argtypes = (c_void_p,
+                                    c_char_p,
+                                    c_char_p,
+                                    POINTER(structs.VimbaFeatureEnumEntry),
+                                    c_int32)
+                                    
     # get the string value of a feature
     featureStringGet = _vimbaDLL.VmbFeatureStringGet
     featureStringGet.restype = c_int32
