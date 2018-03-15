@@ -11,7 +11,8 @@ try:
     import numpy as np
 except ImportError:
     warnings.warn('numpy not found, some VimbaFrame methods will not be available')
-
+import time
+import asyncio
 
 """
 Map pixel formats to bytes per pixel.
@@ -125,6 +126,25 @@ class VimbaFrame(object):
         if errorCode != 0:
             raise VimbaException(errorCode)
 
+    async def waitFrameCapture_async(self, small_timeout=1, total_timeout=2.0):
+        """
+        Wait for a queued frame to be filled (or dequeued)
+        """
+        
+        start_time = time.monotonic()
+        while True:
+            errorCode = self.waitFrameCapture(small_timeout)
+            if errorCode == -12: #timeout
+                await asyncio.sleep(1e-3)
+                if time.monotonic() - start_time > total_timeout:
+                    break
+                else:
+                    continue
+            else:
+                break
+        return errorCode
+        
+        
     def waitFrameCapture(self, timeout=2000):
         """
         Wait for a queued frame to be ﬁlled (or dequeued).  Returns Errorcode
