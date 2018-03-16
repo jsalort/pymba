@@ -131,18 +131,21 @@ class VimbaFrame(object):
         Wait for a queued frame to be filled (or dequeued)
         """
         
-        start_time = time.monotonic()
-        while True:
-            errorCode = self.waitFrameCapture(small_timeout)
-            if errorCode == -12: #timeout
-                await asyncio.sleep(1e-3)
-                if time.monotonic() - start_time > total_timeout:
-                    break
-                else:
-                    continue
-            else:
-                break
+        loop = asyncio.get_event_loop()
+        errorCode = await loop.run_in_executor(None, self.waitFrameCapture, total_timeout)
         return errorCode
+        #start_time = time.monotonic()
+        #while True:
+        #    errorCode = self.waitFrameCapture(small_timeout)
+        #    if errorCode == -12: #timeout
+        #        await asyncio.sleep(1e-3)
+        #        if time.monotonic() - start_time > total_timeout:
+        #            break
+        #        else:
+        #            continue
+        #    else:
+        #        break
+        #return errorCode
         
         
     def waitFrameCapture(self, timeout=2000):
