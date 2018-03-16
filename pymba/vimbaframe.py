@@ -126,7 +126,7 @@ class VimbaFrame(object):
         if errorCode != 0:
             raise VimbaException(errorCode)
 
-    async def waitFrameCapture_async(self, small_timeout=1, total_timeout=2.0):
+    async def waitFrameCapture_async(self, total_timeout=2000):
         """
         Wait for a queued frame to be filled (or dequeued)
         """
